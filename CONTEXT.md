@@ -26,7 +26,7 @@
 - Open + concrete + unclaimed bugs we could pick: #2197 (BreakdownChart all-zero), #2184 (Panel header truncation).
 
 ## Gap ledger (dedupe — READ FIRST, never re-pick)
-- `2026-09-03` issue #2197 (BreakdownChart renders first item as 100% when all values are zero) — pr-opened (fork PR). Root cause: `BreakdownBar.Render` divides by `maxValue=0` and calls `Ratio.Distribute` with all-zero ratios (Debug.Assert fires in debug; first item gets full width in release). Fix: guard `maxValue <= 0` in `BreakdownBar.Render` (yield break). Regression test `Should_Not_Render_Bar_When_All_Values_Are_Zero` + `AllZero.Output.verified.txt`. 753 tests pass. No open/closed/merged upstream PR referenced #2197 (deduped).
+- `2026-09-03` issue #2197 (BreakdownChart renders first item as 100% when all values are zero) — pr-opened (fork PR https://github.com/olitreadwell/spectre.console/pull/1). Root cause: `BreakdownBar.Render` divides by `maxValue=0` and calls `Ratio.Distribute` with all-zero ratios (Debug.Assert fires in debug; first item gets full width in release). Fix: guard `maxValue <= 0` in `BreakdownBar.Render` (yield break). Regression test `Should_Not_Render_Bar_When_All_Values_Are_Zero` + `AllZero.Output.verified.txt`. 753 tests pass. No open/closed/merged upstream PR referenced #2197 (deduped).
 - `2026-09-03` issue #2182 (ProgressContext.IsFinished premature true) — dropped (claimed: open PR #2183 by MateusMo).
 - `2026-09-03` issue #2168 (cursor hidden after cancelling list prompt) — dropped (claimed: open PR #2174 by HillkirkLautaro).
 - `2026-09-03` issue #2167 (ProgressTask negative MaxValue) — dropped (claimed: open PR #2170).
