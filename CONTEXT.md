@@ -1,5 +1,5 @@
 # spectreconsole/spectre.console context
-> refreshed 2026-09-03 | upstream default: main @ a3065cf81cd9351a08690434a7f4631a1699b13d
+> refreshed 2026-09-30 | upstream default: main @ 01027efcd6c40c5ca1b2f0eb22261336c7209318
 
 ## Identity & policies
 - upstream: spectreconsole/spectre.console, default branch `main`, primary language C# (.NET), English-first (yes — issues/docs/UI in English).
@@ -33,3 +33,11 @@
 
 ## Mined gaps (discovered, not yet attempted)
 - `2026-09-03` docs/clean-code #2184 Panel drops/truncates a header wider than its content even with room — `Panel.Measure` ignores header width; `AddTopBorder` renders header via Rule which ellipsizes. Repro in issue. status: proposed (not attempted this cycle).
+
+## Fork / CI notes
+- `2026-09-30` Fork Actions are now ENABLED (`GET /repos/olitreadwell/spectre.console/actions/permissions` -> enabled:true, allowed_actions:all). The earlier "fork Actions not connected" note (2026-09-03) is stale: after enabling, a push to a fork branch triggers `.github/workflows/ci.yaml` (job "Build": `dotnet tool restore && dotnet make`). A queued/never-run workflow can be nudged by a force-push (synchronize event).
+- `2026-09-30` Local build note for this container: `dotnet make` (Cake) needs the .NET 8/9/10 runtimes because the test projects multi-target; only .NET 10 was preinstalled, so 8.0 + 9.0 runtimes were added. `dotnet make` default target = Clean, Build (warnings-as-errors), Test, Package; `Lint` (`dotnet format style --verify-no-changes`) is a separate target and NOT part of CI's default, and has pre-existing findings in untouched files (`EmojiEmitter.cs`, `SelectionPromptTests.cs`, `TextPromptTests.cs`, `Rendering/Segment.cs`, `Widgets/Figlet/FigletText.cs`).
+
+## Gap ledger (continued)
+- `2026-09-30` trivial-cleanup pass (typos + broken links) — pr-opened (fork PR https://github.com/olitreadwell/spectre.console/pull/7, branch `fix/docs-typos-dead-links`, base `main`). Packed 9 genuine, verified, meaning-preserving fixes in 9 files (diff +9/-9, no whitespace churn): `CONTRIBUTING.md` licence link `LICENSE`->`LICENSE.md` (404 verified); `README.jp.md` `./appendix/emojis`->`https://spectreconsole.net/appendix/emojis` (404 verified, no `appendix/` dir); `TypeNameHelper.cs` dead `aspnet/Common/blob/dev/...`->`dotnet/runtime/.../TypeNameHelper.cs` (both checked); `SegmentLine.cs` "Preprends"->"Prepends"; `TableRowCollection.cs` column-bound message "rows"->"columns" (+ updated test expectation in `TableRowCollectionTests.cs`); 3x `resources/scripts/Generate-*.ps1` "occured"->"occurred". Search: codespell 2.4.3 whole-repo (only these + data/translation false positives), manual misspelling grep, external-URL liveness (docs.microsoft.com->learn redirect is 200, not a fix), plus the whole `README.*` link set. No open/closed/merged upstream PR or issue covers these (deduped via `gh search`); precedent #1998 merged a README typo. Upstream issue-first gate is unresolved (repo template asks for an issue; no upstream issue exists) and is recorded as a promotion prerequisite in the fork PR body.
+- `2026-09-25`/`2026-09-26`/`2026-09-27` engine runs on this repo — error (no artefact). Ignore; nothing produced.
