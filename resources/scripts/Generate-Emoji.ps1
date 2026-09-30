@@ -17,7 +17,7 @@ Push-Location $Generator
 &dotnet run -- emoji "$Output" --input $Output
 if(!$?) {
     Pop-Location
-    Throw "An error occured when generating code."
+    Throw "An error occurred when generating code."
 }
 Pop-Location
 

@@ -22,7 +22,7 @@ By contributing to Spectre.Console, you assert that:
 * The contribution is your own original work.
 * You have the right to assign the copyright for the work (it is not owned by your employer, or
   you have been given copyright assignment in writing).
-* You [license](https://github.com/spectreconsole/spectre.console/blob/main/LICENSE) the contribution under the terms applied to the rest of the Spectre.Console project.
+* You [license](https://github.com/spectreconsole/spectre.console/blob/main/LICENSE.md) the contribution under the terms applied to the rest of the Spectre.Console project.
 * You agree to follow the [code of conduct](https://github.com/spectreconsole/spectre.console/blob/main/CODE_OF_CONDUCT.md).
 
 ## Definition of trivial contributions
