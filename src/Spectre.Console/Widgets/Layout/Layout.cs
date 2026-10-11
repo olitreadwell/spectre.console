@@ -98,7 +98,7 @@ public sealed class Layout : Renderable, IRatioResolvable, IHasVisibility
     internal IRenderable Renderable => _renderable;
 
     /// <summary>
-    /// Gets a child layout by it's name.
+    /// Gets a child layout by its name.
     /// </summary>
     /// <param name="name">The layout name.</param>
     /// <returns>The specified child <see cref="Layout"/>.</returns>
@@ -142,7 +142,7 @@ public sealed class Layout : Renderable, IRatioResolvable, IHasVisibility
     }
 
     /// <summary>
-    /// Gets a child layout by it's name.
+    /// Gets a child layout by its name.
     /// </summary>
     /// <param name="name">The layout name.</param>
     /// <returns>The specified child <see cref="Layout"/>.</returns>
