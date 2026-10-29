@@ -23,6 +23,12 @@ internal sealed class BreakdownBar : Renderable
 
         // Chart
         var maxValue = _data.Sum(i => i.Value);
+        if (maxValue <= 0)
+        {
+            // No item has a value, so there is no bar to render.
+            yield break;
+        }
+
         var items = _data.ToArray();
         var bars = Ratio.Distribute(width, items.Select(i => Math.Max(0, (int)(width * (i.Value / maxValue)))).ToArray());
 
