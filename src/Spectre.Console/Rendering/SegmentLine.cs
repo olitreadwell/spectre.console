@@ -36,7 +36,7 @@ public sealed class SegmentLine : List<Segment>
     }
 
     /// <summary>
-    /// Preprends a segment to the line.
+    /// Prepends a segment to the line.
     /// </summary>
     /// <param name="segment">The segment to prepend.</param>
     public void Prepend(Segment segment)

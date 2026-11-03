@@ -301,7 +301,7 @@ public sealed class TableRowCollectionTests
 
             // Then
             result.ShouldBeOfType<IndexOutOfRangeException>()
-                .Message.ShouldBe("Table column index cannot exceed the number of rows in the table.");
+                .Message.ShouldBe("Table column index cannot exceed the number of columns in the table.");
         }
 
         [Fact]

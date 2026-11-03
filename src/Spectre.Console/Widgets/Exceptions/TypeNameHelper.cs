@@ -3,7 +3,7 @@ namespace Spectre.Console;
 internal static class TypeNameHelper
 {
     // from https://github.com/benaadams/Ben.Demystifier/blob/main/src/Ben.Demystifier/TypeNameHelper.cs
-    // which was adapted from https://github.com/aspnet/Common/blob/dev/shared/Microsoft.Extensions.TypeNameHelper.Sources/TypeNameHelper.cs
+    // which was adapted from https://github.com/dotnet/runtime/blob/main/src/libraries/Common/src/Extensions/TypeNameHelper/TypeNameHelper.cs
     public static readonly Dictionary<Type, string> BuiltInTypeNames = new Dictionary<Type, string>
     {
         { typeof(void), "void" },

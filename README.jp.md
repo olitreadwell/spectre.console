@@ -215,7 +215,7 @@ AnsiConsole.Markup("[red]{0}[/]", "Hello [World]".SafeMarkup());
 AnsiConsole.MarkupLine("Hello :globe_showing_europe_africa:!");
 ```
 
-emojiのスタイルについては、付録の[Emoji](./appendix/emojis) を参照してください。
+emojiのスタイルについては、付録の[Emoji](https://spectreconsole.net/appendix/emojis) を参照してください。
 
 ### カラー
 

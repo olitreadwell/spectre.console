@@ -302,7 +302,7 @@ public static class TableExtensions
     }
 
     /// <summary>
-    /// Updates a tables cell.
+    /// Updates a table's cell.
     /// </summary>
     /// <param name="table">The table to update.</param>
     /// <param name="rowIndex">The index of row to update.</param>
@@ -321,7 +321,7 @@ public static class TableExtensions
     }
 
     /// <summary>
-    /// Updates a tables cell.
+    /// Updates a table's cell.
     /// </summary>
     /// <param name="table">The table to update.</param>
     /// <param name="rowIndex">The index of row to update.</param>

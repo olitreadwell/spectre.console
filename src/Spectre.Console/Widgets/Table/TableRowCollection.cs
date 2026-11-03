@@ -107,7 +107,7 @@ public sealed class TableRowCollection : IReadOnlyList<TableRow>
             }
             else if (column >= currentRenderables.Count)
             {
-                throw new IndexOutOfRangeException("Table column index cannot exceed the number of rows in the table.");
+                throw new IndexOutOfRangeException("Table column index cannot exceed the number of columns in the table.");
             }
 
             currentRenderables.RemoveAt(column);

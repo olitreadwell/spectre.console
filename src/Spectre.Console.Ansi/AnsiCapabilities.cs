@@ -18,7 +18,7 @@ public class AnsiCapabilities : IReadOnlyAnsiCapabilities
 
     /// <summary>
     /// Gets or sets a value indicating whether or not
-    /// the console support links.
+    /// the console supports links.
     /// </summary>
     public bool Links { get; set; }
 
@@ -72,24 +72,24 @@ public class AnsiCapabilities : IReadOnlyAnsiCapabilities
 public interface IReadOnlyAnsiCapabilities
 {
     /// <summary>
-    /// Gets or sets the color system.
+    /// Gets the color system.
     /// </summary>
     public ColorSystem ColorSystem { get; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether or not
+    /// Gets a value indicating whether or not
     /// the console supports VT/ANSI control codes.
     /// </summary>
     public bool Ansi { get; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether or not
-    /// the console support links.
+    /// Gets a value indicating whether or not
+    /// the console supports links.
     /// </summary>
     public bool Links { get; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether
+    /// Gets a value indicating whether
     /// or not the console supports alternate buffers.
     /// </summary>
     public bool AlternateBuffer { get; }
