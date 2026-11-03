@@ -141,6 +141,23 @@ public sealed class BreakdownChartTests
         await Verifier.Verify(console.Output);
     }
 
+    [Fact]
+    [Expectation("AllZero")]
+    public async Task Should_Not_Render_Bar_When_All_Values_Are_Zero()
+    {
+        // Given
+        var console = new TestConsole();
+        var chart = new BreakdownChart()
+            .AddItem("A", 0, Color.Red)
+            .AddItem("B", 0, Color.Blue);
+
+        // When
+        console.Write(chart);
+
+        // Then
+        await Verifier.Verify(console.Output);
+    }
+
     public static class Fixture
     {
         public static BreakdownChart GetChart()
