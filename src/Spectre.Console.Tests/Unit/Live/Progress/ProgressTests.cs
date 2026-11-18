@@ -32,6 +32,56 @@ public sealed class ProgressTests
     }
 
     [Fact]
+    public void Should_Render_Indeterminate_Task_Without_Percentage_In_Fallback_Mode()
+    {
+        // Given
+        var console = new TestConsole();
+        var time = new FakeTimeProvider(new DateTime(2024, 1, 1, 12, 0, 0));
+        var progress = new Progress(console, time).AutoRefresh(false);
+
+        // When
+        progress.Start(ctx =>
+        {
+            var task = ctx.AddTask("foo");
+            task.IsIndeterminate = true;
+            task.Increment(50);
+
+            ctx.Refresh();
+            time.Advance(TimeSpan.FromSeconds(31));
+            ctx.Refresh();
+        });
+
+        // Then
+        console.Output.ShouldContain("foo: in progress");
+        console.Output.ShouldNotContain("50%");
+        console.Output.SplitLines().Count(line => line.Contains("foo: in progress")).ShouldBe(2);
+    }
+
+    [Fact]
+    public void Should_Render_Percentage_When_Indeterminate_Task_Becomes_Determinate()
+    {
+        // Given
+        var console = new TestConsole();
+        var progress = new Progress(console).AutoRefresh(false);
+
+        // When
+        progress.Start(ctx =>
+        {
+            var task = ctx.AddTask("foo");
+            task.IsIndeterminate = true;
+            task.Increment(50);
+            ctx.Refresh();
+
+            task.IsIndeterminate = false;
+            ctx.Refresh();
+        });
+
+        // Then
+        console.Output.ShouldContain("foo: in progress");
+        console.Output.ShouldContain("foo: 50%");
+    }
+
+    [Fact]
     public void Should_Not_Auto_Clear_If_Specified()
     {
         // Given
@@ -777,5 +827,148 @@ public sealed class ProgressTests
                 "\e[38;5;8m━━━━━━━━━━\e[0m\n" + // Task
                 "          \n" + // Bottom padding
                 "\e[?25h"); // show cursor
+    }
+
+    [Fact]
+    public void IsFinished_Should_Be_True_When_No_Tasks_Exist()
+    {
+        // Given
+        var console = new TestConsole().Interactive();
+        var progress = new Progress(console)
+            .Columns(new ProgressBarColumn())
+            .AutoRefresh(false)
+            .AutoClear(false);
+
+        var result = false;
+
+        // When
+        progress.Start(ctx =>
+        {
+            result = ctx.IsFinished;
+        });
+
+        // Then
+        result.ShouldBeTrue();
+    }
+
+    [Fact]
+    public void IsFinished_Should_Be_False_When_Task_Has_Not_Started()
+    {
+        // Given
+        var console = new TestConsole().Interactive();
+        var progress = new Progress(console)
+            .Columns(new ProgressBarColumn())
+            .AutoRefresh(false)
+            .AutoClear(false);
+
+        var result = false;
+
+        // When
+        progress.Start(ctx =>
+        {
+            ctx.AddTask("foo", autoStart: false);
+            result = ctx.IsFinished;
+        });
+
+        // Then
+        result.ShouldBeFalse();
+    }
+
+    [Fact]
+    public void IsFinished_Should_Be_True_When_Task_Has_Started_And_Finished()
+    {
+        // Given
+        var console = new TestConsole().Interactive();
+        var progress = new Progress(console)
+            .Columns(new ProgressBarColumn())
+            .AutoRefresh(false)
+            .AutoClear(false);
+
+        var result = false;
+
+        // When
+        progress.Start(ctx =>
+        {
+            var task = ctx.AddTask("foo");
+            task.Value = task.MaxValue;
+            result = ctx.IsFinished;
+        });
+
+        // Then
+        result.ShouldBeTrue();
+    }
+
+    [Fact]
+    public void IsFinished_Should_Be_False_When_One_Of_Multiple_Tasks_Has_Not_Started()
+    {
+        // Given
+        var console = new TestConsole().Interactive();
+        var progress = new Progress(console)
+            .Columns(new ProgressBarColumn())
+            .AutoRefresh(false)
+            .AutoClear(false);
+
+        var result = false;
+
+        // When
+        progress.Start(ctx =>
+        {
+            var started = ctx.AddTask("foo");
+            started.Value = started.MaxValue;
+
+            ctx.AddTask("bar", autoStart: false);
+
+            result = ctx.IsFinished;
+        });
+
+        // Then
+        result.ShouldBeFalse();
+    }
+
+    [Fact]
+    public void IsFinished_Should_Be_True_When_Only_Unstarted_Indeterminate_Tasks_Exist()
+    {
+        // Given
+        var console = new TestConsole().Interactive();
+        var progress = new Progress(console)
+            .Columns(new ProgressBarColumn())
+            .AutoRefresh(false)
+            .AutoClear(false);
+
+        var result = false;
+
+        // When
+        progress.Start(ctx =>
+        {
+            ctx.AddTask("foo", autoStart: false).IsIndeterminate();
+            result = ctx.IsFinished;
+        });
+
+        // Then
+        result.ShouldBeTrue();
+    }
+
+    [Fact]
+    public void IsFinished_Should_Be_False_When_Unstarted_Indeterminate_And_Unstarted_Determinate_Tasks_Exist()
+    {
+        // Given
+        var console = new TestConsole().Interactive();
+        var progress = new Progress(console)
+            .Columns(new ProgressBarColumn())
+            .AutoRefresh(false)
+            .AutoClear(false);
+
+        var result = false;
+
+        // When
+        progress.Start(ctx =>
+        {
+            ctx.AddTask("foo", autoStart: false).IsIndeterminate();
+            ctx.AddTask("bar", autoStart: false);
+            result = ctx.IsFinished;
+        });
+
+        // Then
+        result.ShouldBeFalse();
     }
 }
